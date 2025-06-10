@@ -1,0 +1,18 @@
+```{r import packages}
+library(arrow)
+library(tidyr)
+library(dplyr)
+```
+
+
+```{r}
+incoming <- read_parquet("train/incoming_run_data_1.parquet", as_tibble = TRUE)
+normal <- read_parquet("train/run_data_1.parquet", as_tibble = TRUE)
+```
+
+```{r}
+data %>% 
+  select("Run ID") %>% 
+  distinct
+```
+
