@@ -1,18 +1,34 @@
+
+# ```{r install packages}
+# install.packages("arrow")
+# install.packages("arsenal")
+# 
+# ```
+
 ```{r import packages}
 library(arrow)
 library(tidyr)
 library(dplyr)
+library(arsenal)
 ```
 
-
-```{r}
+```{r data import}
 incoming <- read_parquet("train/incoming_run_data_1.parquet", as_tibble = TRUE)
+
 normal <- read_parquet("train/run_data_1.parquet", as_tibble = TRUE)
+
+metro <- read_parquet("train/metrology_data1.parquet", as_tibble = TRUE)
 ```
 
-```{r}
-data %>% 
-  select("Run ID") %>% 
-  distinct
+```{r data cleaning}
+m <- metro %>% 
+  select("Run ID", "Point Index", "Measurement")
+
+n <- normal %>% 
+  select("Tool ID", "Run ID", "Consumable Life", "Step ID", "Sensor Name", "Sensor Value")
+
+df <- full_join(n, m, by = "Run ID")
+
 ```
+
 
